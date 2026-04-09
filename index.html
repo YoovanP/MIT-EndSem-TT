@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MIT End Semester Timetable — Jan–May 2026</title>
+  <meta name="description" content="Manipal Institute of Technology IV Semester B.Tech End Semester Examination Timetable for Jan–May 2026 session. Filter by branch to view your exam schedule." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-primary:    #0a0a0a;
+      --bg-secondary:  #111111;
+      --bg-tertiary:   #1a1a1a;
+      --bg-hover:      #222222;
+      --bg-card:       #141414;
+      --border:        rgba(255,255,255,0.08);
+      --border-strong: rgba(255,255,255,0.15);
+      --text-primary:  #f0f0f0;
+      --text-secondary:#888;
+      --text-muted:    #444;
+      --accent-dim:    rgba(232,232,232,0.1);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --shadow: 0 12px 40px rgba(0,0,0,0.7);
+      --shadow-sm: 0 2px 12px rgba(0,0,0,0.5);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 40% at 50% -5%, rgba(255,255,255,0.04) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    main { position: relative; z-index: 1; }
+
+    /* ── Header ── */
+    header {
+      padding: 2.5rem 2rem 2rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.025) 0%, transparent 100%);
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--accent-dim);
+      border: 1px solid var(--border-strong);
+      border-radius: 100px;
+      padding: 4px 14px;
+      font-size: 10.5px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .header-badge-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--text-secondary);
+    }
+
+    h1 {
+      font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+    .subtitle strong { color: var(--text-primary); font-weight: 500; }
+
+    /* ── App Shell ── */
+    .app-shell {
+      display: grid;
+      grid-template-columns: 268px 1fr;
+      min-height: calc(100vh - 170px);
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      border-right: 1px solid var(--border);
+      background: var(--bg-secondary);
+      padding: 1.25rem 1rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .sidebar-label {
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 0 4px;
+      margin-bottom: 0.7rem;
+    }
+
+    .branch-search {
+      width: 100%;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-size: 12.5px;
+      padding: 7px 11px;
+      outline: none;
+      margin-bottom: 0.6rem;
+      transition: border-color 0.18s;
+    }
+    .branch-search:focus { border-color: var(--border-strong); }
+    .branch-search::placeholder { color: var(--text-muted); }
+
+    .branch-actions {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 0.75rem;
+    }
+
+    .btn-sm {
+      flex: 1;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 5px 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-sm:hover { background: var(--bg-hover); color: var(--text-primary); border-color: var(--border-strong); }
+
+    .branch-list { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+
+    .branch-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.15s;
+      border: 1px solid transparent;
+      user-select: none;
+    }
+    .branch-item:hover { background: var(--bg-hover); border-color: var(--border); }
+    .branch-item.selected { background: var(--accent-dim); border-color: var(--border-strong); }
+
+    .bcheck {
+      width: 14px; height: 14px;
+      border: 1.5px solid var(--border-strong);
+      border-radius: 3px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.15s;
+    }
+    .branch-item.selected .bcheck { background: var(--text-primary); border-color: var(--text-primary); }
+    .bcheck svg { display: none; }
+    .branch-item.selected .bcheck svg { display: block; }
+
+    .binfo { flex: 1; min-width: 0; }
+    .bcode { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 500; color: var(--text-primary); }
+    .bname { font-size: 10.5px; color: var(--text-secondary); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .bcount { font-size: 9.5px; font-family: 'JetBrains Mono', monospace; color: var(--text-muted); background: var(--bg-tertiary); border-radius: 100px; padding: 1px 6px; flex-shrink: 0; }
+
+    /* ── Content ── */
+    .content { padding: 1.75rem 1.75rem 3rem; }
+
+    /* ── SCE Checklist Banner ── */
+    .sce-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      margin-bottom: 1.25rem;
+      animation: panelIn 0.22s ease;
+      text-decoration: none;
+      transition: border-color 0.18s, background 0.18s;
+    }
+    .sce-banner:hover {
+      border-color: rgba(255,255,255,0.3);
+      background: var(--bg-tertiary);
+    }
+    .sce-banner-left { display: flex; align-items: center; gap: 12px; }
+    .sce-banner-icon {
+      width: 34px; height: 34px;
+      border-radius: var(--radius-sm);
+      background: var(--accent-dim);
+      border: 1px solid var(--border-strong);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .sce-banner-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .sce-banner-sub {
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+    .sce-banner-arrow {
+      color: var(--text-muted);
+      transition: color 0.15s, transform 0.15s;
+      flex-shrink: 0;
+    }
+    .sce-banner:hover .sce-banner-arrow { color: var(--text-secondary); transform: translateX(3px); }
+
+    /* ── Calendar Shell ── */
+    .cal-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+
+    .cal-month-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .cal-legend {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .cal-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend-swatch {
+      width: 10px; height: 10px;
+      border-radius: 3px;
+    }
+
+    .legend-swatch.exam { background: var(--text-primary); opacity: 0.9; }
+    .legend-swatch.selected-exam { background: var(--text-primary); opacity: 0.9; outline: 2px solid rgba(255,255,255,0.6); outline-offset: 1px; }
+
+    /* Day-of-week header row */
+    .cal-dow-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+
+    .cal-dow {
+      text-align: center;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 6px 0;
+    }
+
+    /* Calendar grid */
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+
+    /* Individual day cell */
+    .cal-cell {
+      aspect-ratio: 1 / 1.12;
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      display: flex;
+      flex-direction: column;
+      padding: 8px 8px 6px;
+      position: relative;
+      transition: all 0.18s ease;
+      min-height: 72px;
+      background: var(--bg-card);
+    }
+
+    /* Empty filler cells (before May 1 and after May 31) */
+    .cal-cell.filler {
+      background: transparent;
+      border-color: transparent;
+      pointer-events: none;
+    }
+
+    /* Regular non-exam day */
+    .cal-cell.regular {
+      border-color: var(--border);
+      opacity: 0.45;
+    }
+
+    /* Exam day */
+    .cal-cell.exam-day {
+      border-color: var(--border-strong);
+      cursor: pointer;
+      opacity: 1;
+    }
+    .cal-cell.exam-day:hover {
+      border-color: rgba(255,255,255,0.3);
+      background: var(--bg-tertiary);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Exam day where active filter has no match — dim like a regular day */
+    .cal-cell.exam-day.no-match {
+      opacity: 0.3;
+      cursor: default;
+      border-color: var(--border);
+    }
+    .cal-cell.exam-day.no-match:hover {
+      transform: none;
+      box-shadow: none;
+      background: var(--bg-card);
+      border-color: var(--border);
+    }
+
+    /* Exam day with a selected-branch exam */
+    .cal-cell.has-selected {
+      border-color: rgba(255,255,255,0.35);
+      background: #1c1c1c;
+    }
+    .cal-cell.has-selected:hover {
+      border-color: rgba(255,255,255,0.5);
+    }
+
+    /* Active (clicked) exam day */
+    .cal-cell.active {
+      border-color: var(--text-primary) !important;
+      background: #1e1e1e !important;
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.1), var(--shadow-sm);
+      transform: none !important;
+    }
+
+    /* Weekend tint */
+    .cal-cell.weekend:not(.filler) .cal-day-num { color: var(--text-secondary); }
+
+    .cal-day-num {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1;
+      margin-bottom: 5px;
+    }
+
+    .cal-cell.regular .cal-day-num { color: var(--text-muted); }
+
+    /* Answer Script View / Event days */
+    .cal-cell.event-day {
+      border-style: dashed;
+      border-color: rgba(255,255,255,0.22);
+      background: #161616;
+      opacity: 1;
+      cursor: default;
+    }
+    .cal-cell.event-day .cal-day-num { color: var(--text-primary); }
+    .cal-event-label {
+      font-size: 9px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.35;
+      margin-top: auto;
+      padding-top: 4px;
+      letter-spacing: 0.01em;
+    }
+    .cal-event-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 8.5px;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      background: rgba(255,255,255,0.07);
+      border: 1px dashed rgba(255,255,255,0.18);
+      border-radius: 4px;
+      padding: 2px 6px;
+      margin-top: 4px;
+      width: fit-content;
+    }
+
+    /* Exam dot indicators */
+    .cal-dot-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+      margin-top: auto;
+    }
+
+    .cal-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .cal-dot.selected { background: var(--text-primary); }
+
+    /* Exam count label (shown when no branch selected) */
+    .cal-count-label {
+      font-size: 9px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    .cal-cell.exam-day .cal-count-label { color: var(--text-secondary); }
+    .cal-cell.has-selected .cal-count-label { color: rgba(255,255,255,0.6); }
+
+    /* Exam preview chip inside cell */
+    .cal-chip {
+      font-size: 9px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      background: rgba(255,255,255,0.05);
+      border-radius: 3px;
+      padding: 2px 4px;
+      margin-top: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.3;
+    }
+
+    .cal-cell.has-selected .cal-chip {
+      background: rgba(255,255,255,0.1);
+      color: var(--text-primary);
+    }
+
+    /* ── Detail Panel ── */
+    .detail-panel {
+      margin-top: 1.5rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      animation: panelIn 0.22s ease;
+    }
+
+    @keyframes panelIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .detail-top {
+      padding: 1.4rem 1.6rem 1.2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .detail-date-big {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .detail-sub {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-top: 3px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .time-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10.5px;
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 3px 9px;
+      color: var(--text-secondary);
+    }
+
+    .detail-close {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 5px 10px;
+      font-size: 11px;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+    .detail-close:hover { background: var(--bg-hover); color: var(--text-primary); border-color: var(--border-strong); }
+
+    .detail-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 8px;
+      padding: 1.25rem 1.6rem 1.6rem;
+    }
+
+    .dcard {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 13px 15px;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .dcard:hover { border-color: var(--border-strong); background: var(--bg-tertiary); }
+
+    .dcard-branch {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .dcard-code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      color: var(--text-secondary);
+      margin-bottom: 3px;
+    }
+
+    .dcard-name {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.4;
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--border-strong); }
+
+    /* ── Responsive ── */
+    @media (max-width: 860px) {
+      .app-shell { grid-template-columns: 1fr; }
+      .sidebar { position: static; height: auto; max-height: 300px; border-right: none; border-bottom: 1px solid var(--border); }
+      .cal-cell { min-height: 56px; }
+    }
+    @media (max-width: 540px) {
+      .cal-cell { min-height: 44px; padding: 5px; }
+      .cal-day-num { font-size: 11px; }
+      .cal-chip { display: none; }
+      .content { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="header-badge"><span class="header-badge-dot"></span>End Semester Examinations</div>
+    <h1>MIT Manipal — IV Semester</h1>
+    <p class="subtitle"><strong>B.Tech End Semester Timetable</strong> &nbsp;·&nbsp; Jan–May 2026 Session &nbsp;·&nbsp; All exams at <strong>2:00 PM – 5:00 PM</strong></p>
+  </header>
+
+  <div class="app-shell">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-label">Select Branches</div>
+      <input class="branch-search" type="text" id="branchSearch" placeholder="Search branch…" autocomplete="off" />
+      <div class="branch-actions">
+        <button class="btn-sm" id="btnSelectAll">Select All</button>
+        <button class="btn-sm" id="btnClearAll">Clear All</button>
+      </div>
+      <div class="branch-list" id="branchList"></div>
+    </aside>
+
+    <!-- Main content -->
+    <section class="content">
+      <!-- SCE checklist banner (shown only when an SCE branch is selected) -->
+      <div id="sceBanner"></div>
+
+      <div class="cal-header">
+        <h2 class="cal-month-title">May 2026</h2>
+        <div class="cal-legend">
+          <div class="cal-legend-item">
+            <div class="legend-swatch" style="background:var(--bg-tertiary);border:1px solid var(--border-strong)"></div>
+            <span>Exam Day</span>
+          </div>
+          <div class="cal-legend-item">
+            <div class="legend-swatch exam"></div>
+            <span>Your Exam</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Day-of-week headers -->
+      <div class="cal-dow-row">
+        <div class="cal-dow">Mon</div>
+        <div class="cal-dow">Tue</div>
+        <div class="cal-dow">Wed</div>
+        <div class="cal-dow">Thu</div>
+        <div class="cal-dow">Fri</div>
+        <div class="cal-dow">Sat</div>
+        <div class="cal-dow">Sun</div>
+      </div>
+
+      <!-- Calendar grid (JS fills this) -->
+      <div class="cal-grid" id="calGrid"></div>
+
+      <!-- Detail panel -->
+      <div id="detailPanel"></div>
+    </section>
+  </div>
+</main>
+
+<script>
+// ─── DATA ────────────────────────────────────────────────────────────────────
+const BRANCHES = [
+  { id:'902', code:'902', name:'Biomedical Engineering',           abbr:'BME'      },
+  { id:'903', code:'903', name:'Chemical Engineering',             abbr:'CHE'      },
+  { id:'904', code:'904', name:'Civil Engineering',                abbr:'CIE'      },
+  { id:'905', code:'905', name:'Computer Science Engg',            abbr:'SCE'      },
+  { id:'906', code:'906', name:'Electrical & Electronics Engg',    abbr:'ELE'      },
+  { id:'907', code:'907', name:'Electronics & Comm Engg',          abbr:'ECE'      },
+  { id:'909', code:'909', name:'Mechanical & Industrial Engg',     abbr:'MIE'      },
+  { id:'911', code:'911', name:'Computer Science Engg (911)',      abbr:'SCE'      },
+  { id:'924', code:'924', name:'Biotechnology',                    abbr:'BIO'      },
+  { id:'929', code:'929', name:'Mechatronics Engg',                abbr:'MTE'      },
+  { id:'931', code:'931', name:'Industrial Engineering',           abbr:'IE'       },
+  { id:'932', code:'932', name:'Electronics & Instrumentation',    abbr:'E&I'      },
+  { id:'933', code:'933', name:'Aeronautical Engineering',         abbr:'AERO'     },
+  { id:'934', code:'934', name:'Automobile Engineering',           abbr:'AUTO'     },
+  { id:'953', code:'953', name:'Computer Science Engg (953)',      abbr:'SCE'      },
+  { id:'957', code:'957', name:'Mathematics & Computing',          abbr:'MAT&COMP' },
+  { id:'958', code:'958', name:'Financial Technology',             abbr:'FIN.TECH' },
+  { id:'959', code:'959', name:'VLSI Design',                     abbr:'VLSI'     },
+  { id:'961', code:'961', name:'Cyber Physical Systems',           abbr:'CPS'      },
+  { id:'962', code:'962', name:'Computer Science Engg (962)',      abbr:'SCE'      },
+  { id:'964', code:'964', name:'MIE Dual Degree',                 abbr:'MIE DUAL' },
+  { id:'965', code:'965', name:'MTE Dual Degree',                 abbr:'MTE DUAL' },
+  { id:'968', code:'968', name:'Computer Science Engg (968)',      abbr:'SCE'      },
+];
+
+// [date_iso, branch_id, subject_code, subject_name]
+const EXAMS = [
+  // 02-05-2026
+  ['2026-05-02','902','MAT 2223','Engineering Mathematics IV'],
+  ['2026-05-02','903','MAT 2224','Engineering Mathematics – IV'],
+  ['2026-05-02','904','MAT 2225','Engineering Mathematics – IV'],
+  ['2026-05-02','906','ELE 2225','Electrical Machinery – II'],
+  ['2026-05-02','907','ECE 2222','Digital Signal Processing'],
+  ['2026-05-02','909','MAT 2230','Engineering Mathematics – IV'],
+  ['2026-05-02','924','MAT 2224','Engineering Mathematics – IV'],
+  ['2026-05-02','929','MAT 2231','Engineering Mathematics – IV'],
+  ['2026-05-02','931','MAT 2229','Engineering Mathematics – IV'],
+  ['2026-05-02','932','ICE 2222','Microcontrollers'],
+  ['2026-05-02','933','MAT 2221','Engineering Mathematics IV'],
+  ['2026-05-02','934','MAT 2222','Engineering Mathematics – IV'],
+  ['2026-05-02','957','MAT 2234','Real Analysis'],
+  ['2026-05-02','958','CSF 2221','Cyber Security'],
+  ['2026-05-02','959','ECE 2222','Digital Signal Processing'],
+  ['2026-05-02','961','ICE 2222','Microcontrollers'],
+  ['2026-05-02','964','MAT 2230','Engineering Mathematics – IV'],
+  ['2026-05-02','965','MAT 2231','Engineering Mathematics – IV'],
+  // 05-05-2026
+  ['2026-05-05','902','BME 2224','Microcontrollers'],
+  ['2026-05-05','903','CHE 2222','Mass Transfer – II'],
+  ['2026-05-05','904','CIE 2223','Basic Reinforced Concrete Design'],
+  ['2026-05-05','905','CSS 2203','Introduction to Artificial Intelligence'],
+  ['2026-05-05','906','ELE 2221','Analog System Design'],
+  ['2026-05-05','907','ECE 2223','Analog Integrated Circuits'],
+  ['2026-05-05','909','MIE 2224','Turbomachines'],
+  ['2026-05-05','911','CSS 2203','Introduction to Artificial Intelligence'],
+  ['2026-05-05','924','BIO 2224','Principles of Heat and Mass Transfer'],
+  ['2026-05-05','929','MTE 2221','Theory of Machines'],
+  ['2026-05-05','931','MIE 2226','Operations Research'],
+  ['2026-05-05','932','ICE 2224','Digital Signal Processing'],
+  ['2026-05-05','933','AAE 2225','Advanced Aircraft Structures'],
+  ['2026-05-05','934','AAE 2226','Automotive Component Design'],
+  ['2026-05-05','953','CSS 2203','Introduction to Artificial Intelligence'],
+  ['2026-05-05','957','MAT 2238','Vector Analysis and Complex Variables'],
+  ['2026-05-05','958','CSF 2222','Introduction to Fintech'],
+  ['2026-05-05','959','ECE 2229','FPGA Based System Design using Verilog'],
+  ['2026-05-05','961','ICE 2228','Introduction to Control Theory'],
+  ['2026-05-05','962','CSS 2203','Introduction to Artificial Intelligence'],
+  ['2026-05-05','964','MIE 2224','Turbomachines'],
+  ['2026-05-05','965','MTE 2221','Theory of Machines'],
+  ['2026-05-05','968','CSS 2203','Introduction to Artificial Intelligence'],
+  // 07-05-2026
+  ['2026-05-07','902','BME 2221','Basic Clinical Sciences – I'],
+  ['2026-05-07','903','CHE 2223','Chemical Reaction Engineering'],
+  ['2026-05-07','904','CIE 2221','Geotechnical Engineering'],
+  ['2026-05-07','905','MAT 2201','Probability and Optimization'],
+  ['2026-05-07','906','MAT 2227','Engineering Mathematics – IV'],
+  ['2026-05-07','907','MAT 2227','Engineering Mathematics – IV'],
+  ['2026-05-07','909','MIE 2221','Design of Machine Elements'],
+  ['2026-05-07','911','MAT 2201','Probability and Optimization'],
+  ['2026-05-07','924','BIO 2225','Immunology'],
+  ['2026-05-07','929','MTE 2222','Design of Machine Elements'],
+  ['2026-05-07','931','MIE 2228','Supply and Logistics Management'],
+  ['2026-05-07','932','MAT 2228','Engineering Mathematics – IV'],
+  ['2026-05-07','933','AAE 2223','Linear Control Theory'],
+  ['2026-05-07','934','AAE 2223','Linear Control Theory'],
+  ['2026-05-07','953','MAT 2201','Probability and Optimization'],
+  ['2026-05-07','957','MAT 2235','Algebraic Structures'],
+  ['2026-05-07','958','MAT 2232','Probability, Stochastic Process & Operations Research'],
+  ['2026-05-07','959','MAT 2227','Engineering Mathematics IV'],
+  ['2026-05-07','961','MAT 2227','Engineering Mathematics – IV'],
+  ['2026-05-07','962','MAT 2201','Probability and Optimization'],
+  ['2026-05-07','964','MIE 2221','Design of Machine Elements'],
+  ['2026-05-07','965','MTE 2222','Design of Machine Elements'],
+  ['2026-05-07','968','MAT 2201','Probability and Optimization'],
+  // 09-05-2026
+  ['2026-05-09','902','BME 2225','Digital Signal Processing'],
+  ['2026-05-09','903','CHE 2225','Heat Transfer Operations'],
+  ['2026-05-09','904','CIE 2225','Water Resource Engineering'],
+  ['2026-05-09','905','CSS 2201','Database Systems'],
+  ['2026-05-09','906','ELE 2223','Linear Control Theory'],
+  ['2026-05-09','907','ECE 2221','VLSI Design'],
+  ['2026-05-09','909','MIE 2231','Metrology and Mechanical Measurements'],
+  ['2026-05-09','911','CSS 2201','Database Systems'],
+  ['2026-05-09','924','BIO 2221','Chemical and Biochemical Engg Thermodynamics'],
+  ['2026-05-09','929','MTE 2224','Linear Control Theory'],
+  ['2026-05-09','931','MIE 2229','Design of Experiments'],
+  ['2026-05-09','932','ICE 2221','Linear Integrated Circuits'],
+  ['2026-05-09','933','AAE 2224','Aircraft Performance'],
+  ['2026-05-09','934','AAE 2228','Vehicle Transmission Systems'],
+  ['2026-05-09','953','CSS 2201','Database Systems'],
+  ['2026-05-09','957','CSS 2201','Database Systems'],
+  ['2026-05-09','958','CSF 2224','Software Systems'],
+  ['2026-05-09','959','ECE 2221','VLSI Design'],
+  ['2026-05-09','961','ICE 2225','Communication Systems'],
+  ['2026-05-09','962','CSS 2201','Database Systems'],
+  ['2026-05-09','964','MIE 2231','Metrology and Mechanical Measurements'],
+  ['2026-05-09','965','MTE 2224','Linear Control Theory'],
+  ['2026-05-09','968','CSS 2201','Database Systems'],
+  // 12-05-2026
+  ['2026-05-12','902','BME 2223','Biomechanics'],
+  ['2026-05-12','903','CHE 2221','Particle Technology'],
+  ['2026-05-12','904','CIE 2222','Transportation Engineering'],
+  ['2026-05-12','905','CSS 2202','Design & Analysis of Algorithms'],
+  ['2026-05-12','906','ELE 2224','Generation, Transmission and Distribution'],
+  ['2026-05-12','907','ECE 2225','Modern Control Theory'],
+  ['2026-05-12','909','MIE 2222','Materials Engineering'],
+  ['2026-05-12','911','CSS 2202','Design & Analysis of Algorithms'],
+  ['2026-05-12','924','BIO 2222','Downstream Processes – I'],
+  ['2026-05-12','929','MTE 2225','Microcontroller Based System Design'],
+  ['2026-05-12','931','MIE 2230','Lean Manufacturing and Six Sigma'],
+  ['2026-05-12','932','ICE 2229','Communication on Incompressible Flow'],
+  ['2026-05-12','933','AAE 2221','Incompressible Aerodynamics'],
+  ['2026-05-12','934','AAE 2229','Autotronics'],
+  ['2026-05-12','953','CSS 2202','Design & Analysis of Algorithms'],
+  ['2026-05-12','957','MAT 2240','Mathematical Logic and Computability'],
+  ['2026-05-12','958','HUM 2221','Accounting & Finance for Engineers'],
+  ['2026-05-12','959','ECE 2226','Physics of Semiconductor Devices'],
+  ['2026-05-12','961','ICE 2226','Digital Transmission'],
+  ['2026-05-12','962','CSS 2202','Design & Analysis of Algorithms'],
+  ['2026-05-12','964','MIE 2222','Materials Engineering'],
+  ['2026-05-12','965','MTE 2225','Microcontroller Based System Design'],
+  ['2026-05-12','968','CSS 2202','Design & Analysis of Algorithms'],
+  // 14-05-2026
+  ['2026-05-14','902','BME 2222','Biomedical Instrumentation'],
+  ['2026-05-14','903','CHE 2224','Pollution Control and Safety in Chemical Industry'],
+  ['2026-05-14','904','CIE 2224','Wastewater Management'],
+  ['2026-05-14','905','CSS 2204','Operating Systems'],
+  ['2026-05-14','906','ELE 2222','Power Electronics'],
+  ['2026-05-14','907','ECE 2224','Microwave Engineering'],
+  ['2026-05-14','909','MIE 2225','Manufacturing Processes – II'],
+  ['2026-05-14','911','CSS 2204','Operating Systems'],
+  ['2026-05-14','924','BIO 2223','Genetic Engineering'],
+  ['2026-05-14','929','MTE 2223','Industrial Automation'],
+  ['2026-05-14','931','MIE 2227','Work System Engineering and Ergonomics'],
+  ['2026-05-14','932','ICE 2223','Industrial Instrumentation'],
+  ['2026-05-14','933','AAE 2222','Air-Breathing Propulsion'],
+  ['2026-05-14','934','AAE 2227','Manufacturing Techniques & Metrology'],
+  ['2026-05-14','953','CSS 2204','Operating Systems'],
+  ['2026-05-14','957','CSS 2204','Operating Systems'],
+  ['2026-05-14','958','HUM 2222','Design Thinking'],
+  ['2026-05-14','959','ECE 2228','Computer Organization and Architecture'],
+  ['2026-05-14','961','ICE 2227','Introduction to Cyber Physical Systems'],
+  ['2026-05-14','962','CSS 2204','Operating Systems'],
+  ['2026-05-14','964','MIE 2225','Manufacturing Processes – II'],
+  ['2026-05-14','965','MTE 2223','Industrial Automation'],
+  ['2026-05-14','968','CSS 2204','Operating Systems'],
+];
+
+const EXAM_DATES = new Set(['2026-05-02','2026-05-05','2026-05-07','2026-05-09','2026-05-12','2026-05-14']);
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let selectedBranches = new Set();
+let activeDate = null;
+let searchQuery = '';
+
+// ─── HELPERS ─────────────────────────────────────────────────────────────────
+function isoFor(day) { return `2026-05-${String(day).padStart(2,'0')}`; }
+
+function examsForDate(iso) {
+  return EXAMS.filter(e => e[0] === iso);
+}
+
+function selectedExamsForDate(iso) {
+  return EXAMS.filter(e => e[0] === iso && (selectedBranches.size === 0 || selectedBranches.has(e[1])));
+}
+
+function getBranch(id) { return BRANCHES.find(b => b.id === id); }
+
+function formatDateLong(iso) {
+  return new Date(iso + 'T00:00:00').toLocaleDateString('en-IN', {
+    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+  });
+}
+
+// May 2026: 31 days, May 1 = Friday (index 4 in Mon-based week → offset = 4)
+// Mon=0 … Sun=6. Friday = index 4. So we need 4 filler cells before day 1.
+const MAY_OFFSET = 4; // fillers before May 1
+const MAY_DAYS   = 31;
+
+// ─── RENDER SIDEBAR ──────────────────────────────────────────────────────────
+function renderSidebar() {
+  const list = document.getElementById('branchList');
+  const q = searchQuery.toLowerCase();
+  const filtered = BRANCHES.filter(b =>
+    b.name.toLowerCase().includes(q) || b.code.includes(q) || b.abbr.toLowerCase().includes(q)
+  );
+
+  list.innerHTML = filtered.map(b => {
+    const cnt = EXAMS.filter(e => e[1] === b.id).length;
+    const sel = selectedBranches.has(b.id);
+    return `
+      <div class="branch-item ${sel?'selected':''}" data-id="${b.id}">
+        <div class="bcheck">
+          <svg width="8" height="6" fill="none" viewBox="0 0 8 6">
+            <path d="M1 3L3 5.5L7 1" stroke="#0a0a0a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="binfo">
+          <div class="bcode">${b.code} · ${b.abbr}</div>
+          <div class="bname">${b.name}</div>
+        </div>
+        <span class="bcount">${cnt}</span>
+      </div>`;
+  }).join('');
+
+  list.querySelectorAll('.branch-item').forEach(el => {
+    el.addEventListener('click', () => {
+      const id = el.dataset.id;
+      selectedBranches.has(id) ? selectedBranches.delete(id) : selectedBranches.add(id);
+      renderAll();
+    });
+  });
+}
+
+// May answer script view events
+const EVENTS = {
+  '2026-05-20': { label: 'Answer Script View',  round: 'Round 1',   tentative: true },
+  '2026-05-21': { label: 'Answer Script View',  round: 'Round 1',   tentative: true },
+  '2026-05-22': { label: 'Answer Script View',  round: 'Round 1',   tentative: true },
+  '2026-05-25': { label: 'Answer Script View',  round: 'Round 2',   tentative: true },
+};
+
+// ─── RENDER CALENDAR ─────────────────────────────────────────────────────────
+function renderCalendar() {
+  const grid = document.getElementById('calGrid');
+  const cells = [];
+
+  // Leading filler cells (Mon=0 … Fri=4, so May 1 is on column 5 (0-indexed 4))
+  for (let i = 0; i < MAY_OFFSET; i++) {
+    cells.push(`<div class="cal-cell filler"></div>`);
+  }
+
+  for (let day = 1; day <= MAY_DAYS; day++) {
+    const iso = isoFor(day);
+    const isExamDay = EXAM_DATES.has(iso);
+    const allExams = isExamDay ? examsForDate(iso) : [];
+    const selExams = isExamDay ? selectedExamsForDate(iso) : [];
+    const hasSelected = selExams.length > 0;
+    const isActive = iso === activeDate;
+
+    // Day of week: May 1 = Friday = column index 4 (Mon-based)
+    // day=1 → col=4 (Fri), day=2 → col=5 (Sat), day=3 → col=6 (Sun), day=4 → col=0 (Mon)...
+    const colIdx = (MAY_OFFSET + day - 1) % 7;
+    const isWeekend = colIdx === 5 || colIdx === 6;
+
+    // When a branch filter is active and this exam day has no matching exam → no-match
+    const filterActive = selectedBranches.size > 0;
+    const isNoMatch = isExamDay && filterActive && !hasSelected;
+
+    const eventInfo = EVENTS[iso];
+    const isEventDay = !!eventInfo;
+
+    let cls = 'cal-cell';
+    if (isExamDay) {
+      if (hasSelected) {
+        cls += ' exam-day has-selected';
+      } else if (isNoMatch) {
+        cls += ' exam-day no-match';
+      } else {
+        cls += ' exam-day';
+      }
+    } else if (isEventDay) {
+      cls += ' event-day';
+    } else {
+      cls += ' regular';
+    }
+    if (isWeekend) cls += ' weekend';
+    if (isActive) cls += ' active';
+
+    let inner = `<div class="cal-day-num">${day}</div>`;
+
+    if (isExamDay) {
+      if (hasSelected) {
+        const first = selExams[0];
+        inner += `<div class="cal-chip">${first[3]}</div>`;
+        if (selExams.length > 1) {
+          inner += `<div class="cal-count-label">+${selExams.length - 1} more</div>`;
+        }
+      } else if (!filterActive) {
+        inner += `<div class="cal-count-label">${allExams.length} exam${allExams.length>1?'s':''}</div>`;
+      }
+    } else if (isEventDay) {
+      inner += `<div class="cal-event-tag">&#x25CF; ${eventInfo.round}</div>`;
+      inner += `<div class="cal-event-label">${eventInfo.label}${eventInfo.tentative ? '<br><span style="opacity:0.6">(Tentative)</span>' : ''}</div>`;
+    }
+
+    // no-match cells and event cells are not clickable as exam days
+    const isClickable = isExamDay && !isNoMatch;
+    cells.push(`<div class="${cls}" data-date="${isClickable ? iso : ''}" data-exam="${isClickable}">${inner}</div>`);
+  }
+
+  // Trailing fillers to complete the last row (7 cols × 5 rows = 35 total)
+  const total = MAY_OFFSET + MAY_DAYS;
+  const trailing = total % 7 === 0 ? 0 : 7 - (total % 7);
+  for (let i = 0; i < trailing; i++) {
+    cells.push(`<div class="cal-cell filler"></div>`);
+  }
+
+  grid.innerHTML = cells.join('');
+
+  grid.querySelectorAll('.cal-cell[data-exam="true"]').forEach(el => {
+    el.addEventListener('click', () => {
+      const date = el.dataset.date;
+      if (!date) return;
+      activeDate = activeDate === date ? null : date;
+      renderAll();
+      if (activeDate) {
+        setTimeout(() => {
+          document.getElementById('detailPanel').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 40);
+      }
+    });
+  });
+}
+
+// ─── RENDER DETAIL ───────────────────────────────────────────────────────────
+function renderDetail() {
+  const panel = document.getElementById('detailPanel');
+  if (!activeDate) { panel.innerHTML = ''; return; }
+
+  const all = examsForDate(activeDate);
+  const sel = selectedExamsForDate(activeDate);
+  const show = sel.length > 0 ? sel : all;
+  const label = (sel.length > 0 && selectedBranches.size > 0)
+    ? `${show.length} exam${show.length>1?'s':''} for selected branch${selectedBranches.size>1?'es':''}`
+    : `${show.length} exam${show.length>1?'s':''} scheduled across all branches`;
+
+  const cards = show.map(e => {
+    const b = getBranch(e[1]);
+    return `
+      <div class="dcard">
+        <div class="dcard-branch">
+          <span>${b ? b.code + ' · ' + b.abbr : e[1]}</span>
+          <span style="color:var(--text-muted);font-weight:400">${b ? b.name : ''}</span>
+        </div>
+        <div class="dcard-code">${e[2]}</div>
+        <div class="dcard-name">${e[3]}</div>
+      </div>`;
+  }).join('');
+
+  panel.innerHTML = `
+    <div class="detail-panel">
+      <div class="detail-top">
+        <div>
+          <div class="detail-date-big">${formatDateLong(activeDate)}</div>
+          <div class="detail-sub">
+            <span>${label}</span>
+            <span>·</span>
+            <span class="time-chip">
+              <svg width="10" height="10" fill="none" viewBox="0 0 12 12">
+                <circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.2"/>
+                <path d="M6 3.5V6.5L7.5 8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+              2:00 PM – 5:00 PM
+            </span>
+          </div>
+        </div>
+        <button class="detail-close" id="detailCloseBtn">✕ Close</button>
+      </div>
+      <div class="detail-cards">${cards}</div>
+    </div>`;
+
+  document.getElementById('detailCloseBtn').addEventListener('click', () => {
+    activeDate = null;
+    renderAll();
+  });
+}
+
+// ─── RENDER SCE BANNER ───────────────────────────────────────────────────────
+const SCE_BRANCH_IDS = new Set(['905','911','953','962','968']);
+
+function renderSceBanner() {
+  const banner = document.getElementById('sceBanner');
+  const sceSelected = [...selectedBranches].some(id => SCE_BRANCH_IDS.has(id));
+  if (!sceSelected) { banner.innerHTML = ''; return; }
+
+  banner.innerHTML = `
+    <a class="sce-banner" href="https://docs.google.com/document/d/1VXE33f8SCODkDggaQNaIIGLibmkDKPfUPVJmwC5LAmc/edit?usp=sharing" target="_blank" rel="noopener">
+      <div class="sce-banner-left">
+        <div class="sce-banner-icon">
+          <svg width="17" height="17" fill="none" viewBox="0 0 24 24">
+            <path d="M9 12h6M9 16h6M7 4H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2h-2M9 4a2 2 0 004 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="sce-banner-title">SCE Subject Checklist</div>
+          <div class="sce-banner-sub">Google Doc — topics, syllabus &amp; revision notes</div>
+        </div>
+      </div>
+      <svg class="sce-banner-arrow" width="16" height="16" fill="none" viewBox="0 0 24 24">
+        <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>`;
+}
+
+// ─── RENDER ALL ──────────────────────────────────────────────────────────────
+function renderAll() {
+  renderSceBanner();
+  renderSidebar();
+  renderCalendar();
+  renderDetail();
+}
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+document.getElementById('branchSearch').addEventListener('input', e => {
+  searchQuery = e.target.value;
+  renderSidebar();
+});
+
+document.getElementById('btnSelectAll').addEventListener('click', () => {
+  BRANCHES.forEach(b => selectedBranches.add(b.id));
+  renderAll();
+});
+
+document.getElementById('btnClearAll').addEventListener('click', () => {
+  selectedBranches.clear();
+  activeDate = null;
+  renderAll();
+});
+
+renderAll();
+</script>
+</body>
+</html>
