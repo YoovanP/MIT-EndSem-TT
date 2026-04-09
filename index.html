@@ -256,7 +256,14 @@
     /* ── Content ── */
     .content { padding: 1.75rem 1.75rem 3rem; min-width: 0; }
 
-    /* ── SCE Checklist Banner ── */
+    /* ── Banners ── */
+    .banner-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
     .sce-banner {
       display: flex;
       align-items: center;
@@ -266,10 +273,10 @@
       border: 1px solid var(--border-strong);
       border-radius: var(--radius-md);
       padding: 14px 18px;
-      margin-bottom: 1.25rem;
       animation: panelIn 0.22s ease;
       text-decoration: none;
       transition: border-color 0.18s, background 0.18s;
+      margin-bottom: 0; /* Handled by banner-grid */
     }
     .sce-banner:hover {
       border-color: rgba(255,255,255,0.3);
@@ -703,8 +710,8 @@
 
     <!-- Main content -->
     <section class="content">
-      <!-- SCE checklist banner (shown only when an SCE branch is selected) -->
-      <div id="sceBanner"></div>
+      <!-- SCE banners (shown only when an SCE branch is selected) -->
+      <div id="bannerContainer" class="banner-grid"></div>
 
       <div class="cal-header">
         <h2 class="cal-month-title">May 2026</h2>
@@ -1135,15 +1142,15 @@ function renderDetail() {
   });
 }
 
-// ─── RENDER SCE BANNER ───────────────────────────────────────────────────────
+// ─── RENDER BANNERS ─────────────────────────────────────────────────────────
 const SCE_BRANCH_IDS = new Set(['905','911','953','962','968']);
 
-function renderSceBanner() {
-  const banner = document.getElementById('sceBanner');
+function renderBanners() {
+  const container = document.getElementById('bannerContainer');
   const sceSelected = [...selectedBranches].some(id => SCE_BRANCH_IDS.has(id));
-  if (!sceSelected) { banner.innerHTML = ''; return; }
+  if (!sceSelected) { container.innerHTML = ''; return; }
 
-  banner.innerHTML = `
+  const checklistHtml = `
     <a class="sce-banner" href="https://docs.google.com/document/d/1VXE33f8SCODkDggaQNaIIGLibmkDKPfUPVJmwC5LAmc/edit?usp=sharing" target="_blank" rel="noopener">
       <div class="sce-banner-left">
         <div class="sce-banner-icon">
@@ -1160,11 +1167,31 @@ function renderSceBanner() {
         <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </a>`;
+
+  const resourcesHtml = `
+    <a class="sce-banner" href="https://learnermanipal-my.sharepoint.com/:f:/g/personal/yoovan_mitmpl2024_learner_manipal_edu/EubCfEjMxU9Bqxx7ekUeE0gB_eO2trPk9Cr3giSU6Pgh_Q?e=Di58Ro" target="_blank" rel="noopener">
+      <div class="sce-banner-left">
+        <div class="sce-banner-icon">
+          <svg width="17" height="17" fill="none" viewBox="0 0 24 24">
+            <path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="sce-banner-title">Resources</div>
+          <div class="sce-banner-sub">OneDrive — books, papers &amp; study material</div>
+        </div>
+      </div>
+      <svg class="sce-banner-arrow" width="16" height="16" fill="none" viewBox="0 0 24 24">
+        <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>`;
+
+  container.innerHTML = checklistHtml + resourcesHtml;
 }
 
 // ─── RENDER ALL ──────────────────────────────────────────────────────────────
 function renderAll() {
-  renderSceBanner();
+  renderBanners();
   renderSidebar();
   renderCalendar();
   renderDetail();
