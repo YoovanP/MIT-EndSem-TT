@@ -145,6 +145,9 @@
       transition: all 0.2s;
       align-self: flex-end;
     }
+    .sidebar-toggle svg { flex-shrink: 0; transition: transform 0.2s ease; }
+    .sidebar-toggle-text,
+    .sidebar-toggle-hint { display: none; }
     .sidebar-toggle:hover {
       background: var(--bg-hover);
       color: var(--text-primary);
@@ -667,8 +670,28 @@
       .app-shell { grid-template-columns: 1fr; }
       .sidebar { position: static; height: auto; max-height: unset; border-right: none; border-bottom: 1px solid var(--border); padding: 1rem; }
       .sidebar-collapsed .sidebar { padding: 0.5rem 1rem; }
-      .sidebar-toggle { align-self: stretch; justify-content: center; gap: 8px; margin-bottom: 1rem; }
-      .sidebar-toggle::after { content: 'Filter Branches'; font-size: 13px; font-weight: 500; }
+      .sidebar-toggle {
+        align-self: stretch;
+        justify-content: flex-start;
+        gap: 10px;
+        margin-bottom: 1rem;
+        padding: 10px 12px;
+        border-color: var(--border-strong);
+        background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      }
+      .sidebar-toggle-text {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+      .sidebar-toggle-hint {
+        display: block;
+        margin-left: auto;
+        font-size: 11px;
+        color: var(--text-secondary);
+      }
+      .sidebar-toggle[aria-expanded="false"] svg { transform: rotate(180deg); }
       .sidebar-collapsed .sidebar-toggle { margin-bottom: 0; background: transparent; border-color: transparent; border-radius: 0; }
       .sidebar-collapsed .sidebar-toggle:hover { background: var(--bg-hover); border-color: var(--border-strong); border-radius: var(--radius-sm); }
       .cal-cell { min-height: 56px; }
@@ -694,10 +717,12 @@
   <div class="app-shell" id="appShell">
     <!-- Sidebar -->
     <aside class="sidebar">
-      <button class="sidebar-toggle" id="sidebarToggle" title="Toggle Sidebar">
+      <button class="sidebar-toggle" id="sidebarToggle" title="Collapse filters" aria-expanded="true" aria-controls="branchList">
         <svg id="toggleIcon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 14l6-6 6 6" />
         </svg>
+        <span class="sidebar-toggle-text">Filters</span>
+        <span class="sidebar-toggle-hint" id="sidebarToggleHint">Tap to collapse</span>
       </button>
       <div class="sidebar-label">Select Branches</div>
       <input class="branch-search" type="text" id="branchSearch" placeholder="Search branch…" autocomplete="off" />
@@ -1201,25 +1226,33 @@ function renderAll() {
 const appShell = document.getElementById('appShell');
 const sidebarToggle = document.getElementById('sidebarToggle');
 const toggleIcon = document.getElementById('toggleIcon');
+const sidebarToggleHint = document.getElementById('sidebarToggleHint');
 
-// Load sidebar state
-if (localStorage.getItem('sidebarCollapsed') === 'true') {
-  appShell.classList.add('sidebar-collapsed');
-  updateToggleIcon(true);
-}
+// Default to collapsed on mobile if user has not chosen a preference yet.
+const savedSidebarState = localStorage.getItem('sidebarCollapsed');
+const initialCollapsed = savedSidebarState === null
+  ? window.matchMedia('(max-width: 860px)').matches
+  : savedSidebarState === 'true';
+
+appShell.classList.toggle('sidebar-collapsed', initialCollapsed);
+updateToggleState(initialCollapsed);
 
 sidebarToggle.addEventListener('click', () => {
   const isCollapsed = appShell.classList.toggle('sidebar-collapsed');
   localStorage.setItem('sidebarCollapsed', isCollapsed);
-  updateToggleIcon(isCollapsed);
+  updateToggleState(isCollapsed);
 });
 
-function updateToggleIcon(isCollapsed) {
-  if (isCollapsed) {
-    toggleIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />';
-  } else {
-    toggleIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />';
+function updateToggleState(isCollapsed) {
+  const isExpanded = !isCollapsed;
+  sidebarToggle.setAttribute('aria-expanded', String(isExpanded));
+  sidebarToggle.title = isExpanded ? 'Collapse filters' : 'Expand filters';
+  if (sidebarToggleHint) {
+    sidebarToggleHint.textContent = isExpanded ? 'Tap to collapse' : 'Tap to expand';
   }
+  toggleIcon.innerHTML = isExpanded
+    ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 14l6-6 6 6" />'
+    : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 10l6 6 6-6" />';
 }
 
 document.getElementById('branchSearch').addEventListener('input', e => {
